@@ -4,7 +4,7 @@ import JWT from 'jsonwebtoken';
 import userRepository from "../repositories/user.repository";
     
 
-async function bearerAuthenticationMiddleware(req: Request, res: Response, next:NextFunction){
+async function jwtAuthenticationMiddleware(req: Request, res: Response, next:NextFunction){
     try {
         const authorizationHeader = req.headers['authorization'];
 
@@ -20,21 +20,24 @@ async function bearerAuthenticationMiddleware(req: Request, res: Response, next:
 
         const tokenPayload = JWT.verify(token, 'my_secret_key');
 
-        if(typeof tokenPayload !== 'object' || !tokenPayload.sub ){
-            throw new ForbiddenError('Token Inválido');
+        try {
+            if(typeof tokenPayload !== 'object' || !tokenPayload.sub ){
+                throw new ForbiddenError('Token Inválido');
+             }
+               const user = {
+               uuid: tokenPayload.sub,
+               username: tokenPayload.username
+               };
+               
+               req.user = user;
+            
+               next();
+        } catch (error) {
+            throw new ForbiddenError('Token Inválido'); 
         }
-
-        const user = {
-            uuid: tokenPayload.sub,
-            username: tokenPayload.username
-        };
-
-        req.user = user;
-
-        next();
     } catch (error) {
         next(error);
     }
 }
 
-export default bearerAuthenticationMiddleware;
+export default jwtAuthenticationMiddleware;

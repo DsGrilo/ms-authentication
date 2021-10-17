@@ -1,10 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
-import basicAuthenticationMiddleware from './middlewares/basic-authentication.middleware';
-import bearerAuthenticationMiddleware from './middlewares/bearer-authentication.middleware';
 import errorHandler from './middlewares/error.handler.middleware';
 import authorizationRoute from './routes/authorization.routes';
 import statusRoutes from './routes/status.routes';
 import usersRoute from './routes/users.routes';
+import jwtAuthenticationMiddleware from './middlewares/jwt-authentication.middleware';
 
 
 // gerenciador de rotas que permite fazer req e res via http
@@ -18,11 +17,14 @@ app.use(express.urlencoded({ extended: true}));
 
 
 // ROTAS -
-app.use(bearerAuthenticationMiddleware ,usersRoute);
+app.use(usersRoute);
+
+app.use(authorizationRoute);
+
+app.use(jwtAuthenticationMiddleware);
 
 app.use(statusRoutes);
 
-app.use(authorizationRoute);
 
 // ERRORS HANDLINGS
 
