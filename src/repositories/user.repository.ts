@@ -1,4 +1,5 @@
 import db from "../db";
+import DatabaseError from "../models/errors/database.error.model";
 import UserModel from "../models/user.models";
 
 class UserRepository { 
@@ -20,11 +21,13 @@ class UserRepository {
 
 
     async findById(uuid: string): Promise<UserModel> { 
-        // STRING DO COMANDO SQL
+
+        try {
+             // STRING DO COMANDO SQL
         const query = `
-            SELECT uuid, username
-            FROM application_user
-            WHERE uuid = $1
+        SELECT uuid, username
+        FROM application_user
+        WHERE uuid = $1
         `
 
         // VALORES UTILIZADOS NA QUERY SQL
@@ -39,6 +42,11 @@ class UserRepository {
 
         return user;
 
+        } catch (error) {
+            throw new DatabaseError("Usuário não encontrado ou inexistente");
+
+        }
+       
     }
 
 

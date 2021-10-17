@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import errorHandler from './middlewares/error.handler.middleware';
 import statusRoutes from './routes/status.routes';
 import usersRoute from './routes/users.routes';
 
@@ -18,7 +19,9 @@ app.use(usersRoute);
 
 app.use(statusRoutes);
 
+// ERRORS HANDLINGS
 
+app.use(errorHandler);
 
 
 
