@@ -36,5 +36,10 @@ ADD IN PACKAGE.JSON IN scripts  "build": "tsc -p ./"
 
 npm install --save express 
 
-npm isntall --save-dev @types/express
+npm install --save-dev @types/express
+
+npm install --save-dev ts-node-dev
+
+"dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts"
+
 
