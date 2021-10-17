@@ -35,8 +35,6 @@ usersRoute.get('/users/:uuid', errorHandler , async  (req: Request<{ uuid:string
 usersRoute.post('/users', errorHandler , async (req: Request, res: Response, next: NextFunction) => {
     try{    
 
-      
-
         const newUser= req.body;
         
         const uuid = await userRepository.createUser(newUser);

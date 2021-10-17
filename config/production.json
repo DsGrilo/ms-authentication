@@ -1,0 +1,9 @@
+{
+    "database": {
+        "uri": "DATABASE_URI"
+    },
+    "authentication":{
+        "cryptKey": "AUTHENTICATION_CRYPT_KEY",
+        "secretKey": "AUTHENTICATION_TOKEN_KEY"
+    }
+}   

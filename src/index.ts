@@ -17,13 +17,16 @@ app.use(express.urlencoded({ extended: true}));
 
 
 // ROTAS -
-app.use(usersRoute);
+
+app.use(statusRoutes);
 
 app.use(authorizationRoute);
 
 app.use(jwtAuthenticationMiddleware);
 
-app.use(statusRoutes);
+app.use(usersRoute);
+
+
 
 
 // ERRORS HANDLINGS

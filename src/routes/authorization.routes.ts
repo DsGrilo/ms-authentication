@@ -4,7 +4,7 @@ import  JWT, { SignOptions } from 'jsonwebtoken';
 import { StatusCodes } from "http-status-codes";
 import basicAuthenticationMiddleware from "../middlewares/basic-authentication.middleware";
 import jwtAuthenticationMiddleware from "../middlewares/jwt-authentication.middleware";
-
+import config from 'config'
 
 const authorizationRoute = Router();
 
@@ -23,7 +23,7 @@ authorizationRoute.post('/token', basicAuthenticationMiddleware, async (req: Req
 
         const jwtPayload = { username: user!.username};
         const jwtOptions:SignOptions = { subject: user?.uuid, expiresIn: '1m'};
-        const secretKey = 'my_secret_key'
+        const secretKey = config.get<string>('authentication.secretKey')
 
         const jwt = JWT.sign(jwtPayload , secretKey , jwtOptions);
         res.status(StatusCodes.OK).json({ token: jwt });
