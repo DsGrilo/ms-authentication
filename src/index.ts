@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import basicAuthenticationMiddleware from './middlewares/basic-authentication.middleware';
+import bearerAuthenticationMiddleware from './middlewares/bearer-authentication.middleware';
 import errorHandler from './middlewares/error.handler.middleware';
 import authorizationRoute from './routes/authorization.routes';
 import statusRoutes from './routes/status.routes';
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: true}));
 
 
 // ROTAS -
-app.use(usersRoute);
+app.use(bearerAuthenticationMiddleware ,usersRoute);
 
 app.use(statusRoutes);
 
