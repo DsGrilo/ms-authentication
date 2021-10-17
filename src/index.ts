@@ -1,7 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import errorHandler from './middlewares/error.handler.middleware';
+import authorizationRoute from './routes/authorization.routes';
 import statusRoutes from './routes/status.routes';
 import usersRoute from './routes/users.routes';
+import jwtAuthenticationMiddleware from './middlewares/jwt-authentication.middleware';
 
 
 // gerenciador de rotas que permite fazer req e res via http
@@ -15,9 +17,17 @@ app.use(express.urlencoded({ extended: true}));
 
 
 // ROTAS -
-app.use(usersRoute);
 
 app.use(statusRoutes);
+
+app.use(authorizationRoute);
+
+app.use(jwtAuthenticationMiddleware);
+
+app.use(usersRoute);
+
+
+
 
 // ERRORS HANDLINGS
 
@@ -28,16 +38,7 @@ app.use(errorHandler);
 
 
 
-
-
-
-
-
-
-
-
-
-/*   CONFIGURING INFORMATIONS IN CONSOLE LOG        */
+/*   INICIALIZAÇÃO DO SERVIÇO        */
 
 const url = 'http://localhost';
 const port = 3000;

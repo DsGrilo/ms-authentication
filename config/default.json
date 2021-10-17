@@ -1,0 +1,10 @@
+{
+    "database":{
+        "uri": "postgres://qmyioiei:y0ZHTESRWYry8RFOfYwVpzdymUSgqzcC@fanny.db.elephantsql.com/qmyioiei"
+    },
+    "authentication": {
+        "cryptKey": "off-salt",
+        "secretKey": "tokenkey@"
+    }
+    
+}
