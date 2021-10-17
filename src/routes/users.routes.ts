@@ -20,6 +20,7 @@ usersRoute.get('/users', errorHandler , async (req: Request, res: Response, next
 usersRoute.get('/users/:uuid', errorHandler , async  (req: Request<{ uuid:string}>, res: Response, next: NextFunction) => {
         
         try {
+            
            const uuid = req.params.uuid;
         
            const user = await userRepository.findById(uuid);
@@ -33,6 +34,9 @@ usersRoute.get('/users/:uuid', errorHandler , async  (req: Request<{ uuid:string
 
 usersRoute.post('/users', errorHandler , async (req: Request, res: Response, next: NextFunction) => {
     try{    
+
+      
+
         const newUser= req.body;
         
         const uuid = await userRepository.createUser(newUser);
@@ -46,6 +50,7 @@ usersRoute.post('/users', errorHandler , async (req: Request, res: Response, nex
 
 usersRoute.put('/users/:uuid', errorHandler , async (req: Request<{ uuid:string}>, res: Response, next: NextFunction) => {
     try{
+        
         const uuid = req.params.uuid;
 
         const modifiedUser = req.body;

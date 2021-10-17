@@ -1,5 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
+import basicAuthenticationMiddleware from './middlewares/basic-authentication.middleware';
 import errorHandler from './middlewares/error.handler.middleware';
+import authorizationRoute from './routes/authorization.routes';
 import statusRoutes from './routes/status.routes';
 import usersRoute from './routes/users.routes';
 
@@ -19,6 +21,8 @@ app.use(usersRoute);
 
 app.use(statusRoutes);
 
+app.use(authorizationRoute);
+
 // ERRORS HANDLINGS
 
 app.use(errorHandler);
@@ -28,16 +32,7 @@ app.use(errorHandler);
 
 
 
-
-
-
-
-
-
-
-
-
-/*   CONFIGURING INFORMATIONS IN CONSOLE LOG        */
+/*   INICIALIZAÇÃO DO SERVIÇO        */
 
 const url = 'http://localhost';
 const port = 3000;
