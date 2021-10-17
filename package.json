@@ -1,0 +1,26 @@
+{
+  "name": "ms-authentication",
+  "version": "1.0.0",
+  "description": "Microservice created during DIO LIVE CODE",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./",
+    "build": "tsc -p ./"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DsGrilo/ms-authentication.git"
+  },
+  "author": "Daniel Grilo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DsGrilo/ms-authentication/issues"
+  },
+  "homepage": "https://github.com/DsGrilo/ms-authentication#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.0",
+    "typescript": "^4.4.4"
+  }
+}
