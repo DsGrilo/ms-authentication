@@ -13,7 +13,7 @@ class UserRepository {
         const query = `
         SELECT uuid, username
         FROM application_user
-    `
+        `;
 
         // Aguarda a resposta da query e atribui a uma variavel
         const { rows } = await db.query<UserModel>(query);
@@ -60,40 +60,62 @@ class UserRepository {
 
     async createUser(user: UserModel): Promise<string> {
 
-        const secretKey = config.get<string>('authentication.cryptKey');
+        try{ 
+            const cryptKey = config.get<string>('authentication.cryptKey');
 
-        const query = `
-            INSERT INTO application_user (
-                username, password
-            )
-            VALUES ($1, crypt($2, $3)
-            RETURNING uuid
-            `
-        ;
+            const query = ` 
+                INSERT INTO application_user (
+                    username, password
+                )
+                VALUES ($1, crypt($2, $3))
+                RETURNING uuid
+                `;
 
-        const values = [user.username, user.password, secretKey] 
+            const values = [user.username, user.password, cryptKey] 
 
-        const { rows } = await db.query<{ uuid: string}>(query, values);
+            const { rows } = await db.query<{ uuid: string}>(query, values);
 
-        const  [ newUser ] = rows;
+            const  [ newUser ] = rows;
 
-        return newUser.uuid;
+            return newUser.uuid;
+
+
+            }catch(error){
+                throw new DatabaseError('Erro na consulta');
+            }
+
 
     }
 
     async updateUser(user: UserModel): Promise<void> {
-        const secretKey = config.get<string>('authentication.cryptKey');
+        const cryptKey = config.get<string>('authentication.cryptKey');
+
+        const values = [user.username, user?.password, cryptKey ,user.uuid]; 
         
-        const query = `
+        if(!user.password){
+            const query = `
+            UPDATE  application_user SET
+                username = $1
+            WHERE uuid = $2
+            `;
+
+            const values = [user.username, user.uuid]
+
+            await db.query(query, values);
+
+        }
+        
+            const query = `
             UPDATE  application_user SET
                 username = $1, 
-                password = crypt($2, $3)
+                password = crypt($2, $3))
             WHERE uuid = $4
             `;
 
-        const values = [user.username, user.password, secretKey ,user.uuid]; 
-
-        await db.query(query, values);
+            await db.query(query, values);
+        
+           
+      
 
     }
 
@@ -114,7 +136,7 @@ class UserRepository {
 
 
     async findByIdUsernameandPassword(username: string, password: string): Promise<UserModel | null>{
-        const secretKey = config.get<string>('authentication.cryptKey');
+        const cryptKey = config.get<string>('authentication.cryptKey');
         
         try {
             const query = `
@@ -124,7 +146,7 @@ class UserRepository {
             AND password = crypt($2, $3)
             `;
 
-            const values = [username, password, secretKey];
+            const values = [username, password, cryptKey];
 
             const { rows } = await db.query<UserModel>(query, values);
 

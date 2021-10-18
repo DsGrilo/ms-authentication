@@ -22,7 +22,7 @@ authorizationRoute.post('/token', basicAuthenticationMiddleware, async (req: Req
 
 
         const jwtPayload = { username: user!.username};
-        const jwtOptions:SignOptions = { subject: user?.uuid, expiresIn: '1m'};
+        const jwtOptions:SignOptions = { subject: user?.uuid, expiresIn: '15m'};
         const secretKey = config.get<string>('authentication.secretKey')
 
         const jwt = JWT.sign(jwtPayload , secretKey , jwtOptions);

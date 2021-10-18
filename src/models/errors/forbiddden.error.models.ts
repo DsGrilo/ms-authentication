@@ -6,6 +6,6 @@ export default class ForbiddenError extends Error {
         public error?: string,
      
     ) {
-        super(message);
+        super(message + error);
     }
 }

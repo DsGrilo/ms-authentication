@@ -12,10 +12,6 @@ async function jwtAuthenticationMiddleware(req: Request, res: Response, next:Nex
     
     try {
 
-        const current_time = new Date().getTime() / 1000;
-
-
-
         const authorizationHeader = req.headers['authorization'];
 
         if(!authorizationHeader){
@@ -27,21 +23,13 @@ async function jwtAuthenticationMiddleware(req: Request, res: Response, next:Nex
         if(authenticationType !== 'Bearer' || !token) { 
             throw new ForbiddenError('Tipo de authenticação inválida ou inexistente');
         }
-
-        const tokenPayload = JWT.verify(token, mySecretKey);
-
-
         
         try {
+            const tokenPayload = JWT.verify(token, mySecretKey);
 
-            
-
-            if(typeof tokenPayload !== 'object' || !tokenPayload.sub){
+            if(typeof tokenPayload !== 'object' || !tokenPayload.sub || tokenPayload.verify.expiredAt > Date.now){
                 throw new ForbiddenError('Token Inválido');
              }
-            if(current_time > tokenPayload.exp!){
-                throw new ForbiddenError("Token Expirado");
-            }
 
                const user = {
                uuid: tokenPayload.sub,

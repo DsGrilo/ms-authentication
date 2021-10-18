@@ -4,7 +4,7 @@
     },
     "authentication": {
         "cryptKey": "off-salt",
-        "secretKey": "tokenkey@"
+        "secretKey": "tokenkey_automato"
     }
     
 }
