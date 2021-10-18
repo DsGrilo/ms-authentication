@@ -1,6 +1,6 @@
 {
     "database":{
-        "uri": "postgres://qmyioiei:y0ZHTESRWYry8RFOfYwVpzdymUSgqzcC@fanny.db.elephantsql.com/qmyioiei"
+        "uri": "postgres://xxxxx:y0ZHTESRWYrxxxxxxxxxxxx@xxxxx.db.elephantsql.com/qmyioiei"
     },
     "authentication": {
         "cryptKey": "off-salt",
